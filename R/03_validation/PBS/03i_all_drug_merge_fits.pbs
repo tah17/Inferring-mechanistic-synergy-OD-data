@@ -1,0 +1,13 @@
+#!/bin/bash
+#PBS -e out/
+#PBS -o out/
+#PBS -j oe
+#PBS -l walltime=01:00:00
+#PBS -l select=1:ncpus=1:mem=50gb
+#PBS -J 1-4
+
+cd $HOME
+source miniconda3/bin/activate
+source activate r452
+cd Inferring-mechanistic-synergy-OD-data
+Rscript R/03_validation/03i_all_drug_merge_fits.R 
