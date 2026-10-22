@@ -22,7 +22,7 @@ renv::restore()
 
 in the R console when prompted. The appropriate version of renv should be automatically installed once this repository has been opened in RStudio. For more details please refer to the [Introduction to renv](https://rstudio.github.io/renv/articles/renv.html) vignette.
 
-The scripts in [`03_validation/`](R/03_validation/) and [`s1_prior_pred/`](R/s1_prior_pred/) are intended to be run using Imperial College London's High Performance Computing (HPC) services. To run these scripts yourself on Imperial's HPC facility, a [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html) environment with R at v4.5.2 should be created:
+The scripts in [`03_validation/`](R/03_validation/), [`s1_prior_pred/`](R/s1_prior_pred/) and [`s5_no_drug_test/`](R/s5_no_drug_test/) are intended to be run using Imperial College London's High Performance Computing (HPC) services. To run these scripts yourself on Imperial's HPC facility, a [conda](https://docs.conda.io/projects/conda/en/latest/user-guide/getting-started.html) environment with R at v4.5.2 should be created:
 
 ```
 source miniconda3/bin/activate
@@ -41,10 +41,16 @@ The code is intended to be run by using the .R scripts in the [`R/`](R) folder:
 * [`04_post_pred.R`](R/04_post_pred.R): Performs a posterior predictive check.
 * [`05_plot`](R/05_plot/): Holds the plotting scripts used to generate each the plots in the manuscript text.
 * [`s1_prior_pred`](R/s1_prior_pred/): Conducts a fake data check using 5 generated fake data sets.
-* [`s2_min_ode_diff.R`](R/s2_min_ode_diff.R): Finds the value for the drug-action parameters that have a minimal difference on the models' outputs.
-* [`s3_plot_gompertz_params.R`](R/s3_plot_gompertz_params.R): Plots supplementary figure of inferred drug-action parameters in the Gompertz-D-HS model.
+* [`s2_prior_pred_large_k.R`](R/s2_prior_pred_large_k.R): Conducts a fake data check with fixed high kappa.
+* [`s3_plot_high_kappa.R`](R/s3_plot_high_kappa.R): Plots supplementary figure of the results of the fake data check with the fixed high kappa.
+* [`s4_min_ode_diff.R`](R/s4_min_ode_diff.R): Finds the value for the drug-action parameters that have a minimal difference on the models' outputs.
+* [`s5_no_drug_test`](R/s5_no_drug_test/): Conducts and plots supplementary negative control test.
+* [`s6_plot_gompertz_params.R`](R/s6_plot_gompertz_params.R): Plots supplementary figure of inferred drug-action parameters in the Gompertz-D-HS model.
+* [`s7_post_pred_mixed.R`](R/s7_post_pred_mixed.R): Performs a posterior predictive check for Edwards-D-HS (Mixed) model.
+* [`s8_plot_edwards_mixed_params.R`](R/s8_plot_edwards_mixed_params.R): Plots supplementary figure of posterior predictive check for Edwards-D-HS (Mixed) model.
+* [`s9_model_time_preds.R`](R/s9_model_time_preds.R): Plots supplementary figure of example Edwards-D-HS model predictions.
 
-All Stan models used in the manuscript are in the [`models/`](models) folder. 
+All Stan models used in the manuscript are in the [`models/`](models) folder. The [`MATLAB/`](MATLAB) folder holds the scripts required to perform a structural identifiability analysis for the Edwards-D-HS model.
 
 ## License
 Licensed under the GPLv3 license. See [LICENSE](LICENSE) for more information.
