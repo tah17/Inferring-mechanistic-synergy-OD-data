@@ -146,6 +146,6 @@ legend <- get_legend(
 p_b_legend <- plot_grid(p_b + theme(legend.position = "none"), legend, rel_widths = c(0.72, 0.28), nrow = 1)
 p <- plot_grid(p_a, p_b_legend, labels = "auto", rel_heights = c(0.8, 1), ncol = 1, label_size = 12) 
 
-tiff("figures/figs4.tif", width = 20, height = 23, units = "cm", res=300)
+tiff("figures/figS6.tif", width = 20, height = 23, units = "cm", res=300)
 p
 dev.off()

@@ -58,6 +58,6 @@ gather_draws(stan_fit, cbind(gamma, kappa, epsilon)[k]) %>%
   guides(color = guide_legend(nrow = 1)) +
   scale_color_manual(name="Acting Drug Condition", breaks=c("NA", "AFG", "MGX", "5FC", "AFG+MGX", "AFG+5FC"), values=c("#969696", pal_fill)) -> p
 
-tiff("figures/figs5.tif", width = 20, height = 13, units = "cm", res=300)
+tiff("figures/figS10.tif", width = 20, height = 13, units = "cm", res=300)
 p
 dev.off()

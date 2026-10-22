@@ -45,9 +45,13 @@ get_fake_data <- function(prior_samples, data) {
 #' 
 #' @return List of prior samples, the priors for the drug parameters and the viable list of draws that can be used for fake data checks
 #' 
-get_prior_samples <- function(stanmodel, stan_data, no_of_chains, iter, seed, data) {
+get_prior_samples <- function(stanmodel, stan_data, no_of_chains, iter, seed, data, adapt_delta=NULL) {
   # Sample from prior
-  model_prior <- sampling(stanmodel, data = stan_data, chains = no_of_chains, iter = iter, seed = seed, cores = 1)
+  if (exists("adapt_delta")) {
+    model_prior <- sampling(stanmodel, data = stan_data, chains = no_of_chains, iter = iter, seed = seed, cores = 4, control = list(adapt_delta = adapt_delta))
+  } else {
+    model_prior <- sampling(stanmodel, data = stan_data, chains = no_of_chains, iter = iter, seed = seed, cores = 1)
+  }
   
   # Get drug priors
   gather_draws(model_prior, cbind(gamma, kappa, epsilon)[k]) %>%

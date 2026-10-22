@@ -97,12 +97,16 @@ total_fit_metrics %>%
   ungroup() %>%
   mutate(values = case_when(metric=="LPD" ~ diff, metric=="RMSE" ~ mean_mu)) %>%
   mutate(values_fold = case_when(metric=="LPD" ~ diff_fold, metric=="RMSE" ~ mean)) %>%
+  mutate(values_log = log10(values),
+         values_fold_log = log10(values_fold),
+         ymin_log = log10(values - mean_sem),
+         ymax_log = log10(values + mean_sem)) %>%
   mutate(metric = case_when(metric == "LPD" ~ "Relative LPD", .default=metric)) %>%
   mutate(metric = factor(metric, levels = c("Relative LPD", "RMSE"), labels = c(expression("log"[10]~"Relative LPD"), expression("log"[10]~"RMSE")))) %>%
-  ggplot(aes(x = model, y = values, color=model)) +
-    geom_errorbar(aes(ymin=values-mean_sem, ymax=values+mean_sem), width=0.1, colour="#737373", alpha=0.9, size=0.5) +
+  ggplot(aes(x = model, y = values_log, color=model)) +
+    geom_errorbar(aes(ymin=ymin_log, ymax=ymax_log), width=0.1, colour="#737373", alpha=0.9, size=0.5) +
     geom_point(size=2) +
-    geom_jitter(aes(y = values_fold, shape=factor(fold)), size=1.5, width=0.25, alpha=0.7) +
+    geom_jitter(aes(y = values_fold_log, shape=factor(fold)), size=1.5, width=0.25, alpha=0.7) +
     ggh4x::facet_grid2(metric ~ condition, scales = "free", independent = "y", switch="y", labeller = labeller(metric = label_parsed)) +
     theme_bw(base_size=11) +
     theme(strip.placement = "outside", strip.background = element_blank(), axis.text.x = element_text(angle=90, vjust=0.7, hjust=0.7), strip.text.x=element_text(size=11), strip.text.y=element_text(size=11), legend.position="bottom") +
@@ -111,7 +115,6 @@ total_fit_metrics %>%
     ylab("") +
     scale_color_manual(breaks = model_names, values = model_colours) +
     scale_shape_manual(name="Fold", breaks = 1:3, values = c(18, 17, 15)) +
-    scale_y_continuous(breaks=c(10^(-1.8), 10^(-1.75), 10^(-1.6), 10^(-1.5), 1e-1, 10^(-0.5), 1, 1.25, 1.5, 2, 5), trans="log10",  labels = c(-1.8, -1.75, -1.6, -1.5, -1, -0.5, 0, 0.097, 0.176, 0.301, 0.699)) +
     force_panelsizes(cols = c(3, 3, 1)) -> p
 tiff("figures/fig2.tif", width = 20, height = 17, units = "cm", res=300)
 p
@@ -134,15 +137,19 @@ total_fit_metrics %>%
   ungroup() %>%
   mutate(values = case_when(metric=="LPD" ~ diff, metric=="RMSE" ~ mean_mu)) %>%
   mutate(values_fold = case_when(metric=="LPD" ~ diff_fold, metric=="RMSE" ~ mean)) %>%
+  mutate(values_log = log10(values),
+         values_fold_log = log10(values_fold),
+         ymin_log = log10(values - mean_sem),
+         ymax_log = log10(values + mean_sem)) %>%
   mutate(metric = case_when(metric == "LPD" ~ "Relative LPD", .default=metric)) %>%
   mutate(metric_testing = case_when(metric == "RMSE" & !testing ~ "Train RMSE",
                                     metric == "RMSE" & testing ~ "Test RMSE",
                                     metric == "Relative LPD" & testing ~ "Test Relative LPD")) %>%
   mutate(metric_testing = factor(metric_testing, levels = c("Test Relative LPD", "Test RMSE", "Train RMSE"), labels = c(expression("Test log"[10]~"Relative LPD"), expression("Test log"[10]~"RMSE"), expression("Train log"[10]~"RMSE")))) %>%
-  ggplot(aes(x = model, y = values, color=model)) +
-    geom_errorbar(aes(ymin=values-mean_sem, ymax=values+mean_sem), width=0.1, colour="#737373", alpha=0.9, size=0.5) +
+  ggplot(aes(x = model, y = values_log, color=model)) +
+    geom_errorbar(aes(ymin=ymin_log, ymax=ymax_log), width=0.1, colour="#737373", alpha=0.9, size=0.5) +
     geom_point(size=2) +
-    geom_jitter(aes(y = values_fold, shape=factor(fold)), size=1.5, width=0.25, alpha=0.7) +
+    geom_jitter(aes(y = values_fold_log, shape=factor(fold)), size=1.5, width=0.25, alpha=0.7) +
     ggh4x::facet_grid2(metric_testing ~ condition, scales = "free", independent = "y", switch="y", labeller = labeller(metric_testing = label_parsed)) +
     theme_bw(base_size=11) +
     theme(strip.placement = "outside", strip.background = element_blank(), axis.text.x = element_text(angle=90, vjust=0.7, hjust=0.7), strip.text.x=element_text(size=11), strip.text.y=element_text(size=11), legend.position="bottom") +
@@ -151,9 +158,88 @@ total_fit_metrics %>%
     ylab("") +
     scale_color_manual(breaks = model_names, values = model_colours) +
     scale_shape_manual(name="Fold", breaks = 1:3, values = c(18, 17, 15)) +
-    scale_y_continuous(breaks=c(10^(-2.05), 1e-2, 10^(-1.95), 10^(-1.9), 10^(-1.8), 10^(-1.75), 10^(-1.6), 10^(-1.5), 1e-1, 10^(-0.5), 1, 1.25, 1.5, 2, 5), trans="log10",  labels = c(-2.05, -2, -1.95, -1.9, -1.8, -1.75, -1.6, -1.5, -1, -0.5, 0, 0.097, 0.176, 0.301, 0.699)) +
     force_panelsizes(cols = c(6, 7, 4)) -> p2
 
-tiff("figures/figs1.tif", width = 20, height = 22, units = "cm", res=300)
+tiff("figures/figS1.tif", width = 20, height = 22, units = "cm", res=300)
 p2
 dev.off()
+#
+# Paired fold-wise differences
+#
+# Create labels
+data.frame(metric = rep("Fold-wise difference\nin Relative LPD", 3), 
+                          model = c("Exponential", "Gompertz-invD", "Edwards-D-HS\n(No Synergy)"), 
+                          condition = c("Drug Free", "Excluding Combinations", "All"), 
+                          diff_mean = c(-0.3, -0.05, -0.02), 
+                          label = c("Edwards", "Edwards-indvD", "Edwards-D-HS")) %>%
+  mutate(condition = factor(condition, levels=c("Drug Free", "Excluding Combinations", "All"))) -> text_labels
+#  
+# Calculate pairwise fold diffs and plot
+#
+total_fit_metrics %>%
+  filter(metric%in%c("RMSE", "LPD"), testing) %>%
+  group_by(metric, testing) %>%
+  mutate(rel_mean = max(mean) - mean + 1) %>%
+  ungroup() %>%
+  mutate(values = case_when(metric == "LPD" ~ rel_mean, metric == "RMSE" ~ mean)) %>%
+  group_by(metric, testing, fold) %>%
+  mutate(diff_from_edwards = case_when(condition=="drug_free" ~ values - values[model == "edwards"], 
+                                       condition=="indv_drug" ~ values - values[model == "edwards_indv_drug"],
+                                       condition=="all_drug" ~ values - values[model == "edwards_drug_hs_reg"])) %>%
+  ungroup() %>%
+  group_by(metric, model, testing) %>%
+  mutate(diff_mean = mean(diff_from_edwards)) %>%
+  mutate(diff_sem = sd(diff_from_edwards)/sqrt(3)) %>%
+  ungroup() %>%
+  unique() %>%
+  mutate(model = factor(model, levels=unlist(model_lists), labels = model_names)) %>%
+  mutate(condition = factor(condition, levels=conditions, labels=c("Drug Free", "Excluding Combinations", "All"))) %>%
+  mutate(metric = case_when(metric == "LPD" ~ "Relative LPD", .default=metric)) %>%
+  mutate(metric = factor(metric, levels = c("Relative LPD", "RMSE"), labels = c("Fold-wise difference\nin Relative LPD", "Fold-wise difference\nin RMSE"))) %>%
+  filter(!model%in%c("Edwards", "Edwards-indvD", "Edwards-D-HS")) %>%
+  ggplot(aes(x = model, y = diff_mean, color=model)) +
+    geom_errorbar(aes(ymin=diff_mean-diff_sem, ymax=diff_mean+diff_sem), width=0.1, colour="#737373", alpha=0.9, size=0.5) +
+    geom_point(size = 2) +
+    geom_jitter(aes(y = diff_from_edwards, shape=factor(fold)), size=1.5, width=0.25, alpha=0.7) +
+    ggh4x::facet_grid2(metric ~ condition, scales = "free", independent = "y", switch="y") +
+    geom_text(data = text_labels, aes(label = label), size=3, colour="#636363", nudge_x = 0.5) +
+    theme_bw(base_size=11) +
+    theme(strip.placement = "outside", strip.background = element_blank(), axis.text.x = element_text(angle=90, vjust=0.7, hjust=0.7), strip.text.x=element_text(size=11), strip.text.y=element_text(size=11), legend.position="bottom") +
+    guides(color = "none") +
+    xlab("Models") +
+    ylab("") +
+    geom_hline(yintercept = 0, linetype="dashed", alpha = 0.8) +
+    scale_color_manual(breaks = c("Exponential", 
+                                  "Logistic",
+                                  "Gompertz", 
+                                  "Gompertz\n(OD direct)",
+                                  "Edwards\n(OD direct)", 
+                                  "Gompertz-invD", 
+                                  "Edwards-indvD\n(Gamma=0)",
+                                  "Edwards-indvD\n(Epsilon=0)",
+                                  "Edwards-indvD\n(Kappa=0)",
+                                  "Edwards-indvD\n(Decay)", 
+                                  "Edwards-indvD-HS", 
+                                  "Edwards-D-HS\n(No Synergy)", 
+                                  "Gompertz-D-HS",
+                                  "Gompertz-D-HS\n(No Synergy)"), values = c("#b2df8a",
+                                                                             "#fb9a99",
+                                                                             "#1f78b4",
+                                                                             "#a6cee3",
+                                                                             "#cab2d6", 
+                                                                             "#3690c0",
+                                                                             "#f768a1",
+                                                                             "#dd3497",
+                                                                             "#ae017e",
+                                                                             "#88419d",
+                                                                             "#810f7c",
+                                                                             "#6a51a3",
+                                                                             "#045a8d",
+                                                                             "#045a8d")) +
+    scale_shape_manual(name="Fold", breaks = 1:3, values = c(18, 17, 15)) +
+    force_panelsizes(cols = c(5, 6, 3)) -> p3
+  
+tiff("figures/figS2.tif", width = 20, height = 17, units = "cm", res=300)
+p3
+dev.off()  
+

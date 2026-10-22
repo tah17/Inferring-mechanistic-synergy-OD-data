@@ -30,7 +30,7 @@ readRDS(file = "data/OD.Rda") %>%
   mutate(testing = !training) -> data
 
 # Specify and fit model ---------------------------------------------------
-model <- "edwards_drug_hs_reg_full_data"   # switch with "gompertz_drug_hs_reg_full_data" to get the gompertz fit
+model <- "edwards_drug_hs_reg_full_data"   # switch with "gompertz_drug_hs_reg_full_data" to get the gompertz fit or "edwards_drug_hs_reg_a_full_data" for the antagonistic fit but set adapt_delta=0.99
 stanfile <- paste("models/", model, ".stan", sep = "")
 no_of_chains <- 4
 iter <- 2000

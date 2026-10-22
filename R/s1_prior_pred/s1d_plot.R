@@ -137,7 +137,7 @@ do.call(rbind, tot_coverage_p_v) %>%
 
 p1 <- plot_grid(p_b + theme(legend.position = "top"), p_c + theme(legend.position = "top"), labels = c('b', 'c'), rel_widths = c(0.8, 1), nrow = 1, label_size = 12) 
 p2 <- plot_grid(p_a, p1, labels = c('a', ''), rel_heights = c(1, 0.9), ncol = 1, label_size = 12) 
-tiff("figures/figs2.tif", width = 19, height = 17, units = "cm", res=300)
+tiff("figures/figS3.tif", width = 19, height = 17, units = "cm", res=300)
 p2
 dev.off()
 
@@ -160,7 +160,7 @@ ggplot() +
   ylab("Value") +
   theme(legend.position="top", axis.text.x = element_text(angle=25, vjust=1, hjust=1)) -> p3
 
-tiff("figures/figs3.tif", width = 19, height = 13, units = "cm", res=300)
+tiff("figures/figS4.tif", width = 19, height = 13, units = "cm", res=300)
 p3
 dev.off()
 
