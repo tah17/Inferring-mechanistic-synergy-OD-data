@@ -27,37 +27,31 @@
       ],
       "Hash": "065ae649b05f1ff66bb0c793107508f5"
     },
-    "MASS": {
-      "Package": "MASS",
-      "Version": "7.3-65",
+    "GGally": {
+      "Package": "GGally",
+      "Version": "2.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
+        "RColorBrewer",
+        "S7",
+        "cli",
+        "dplyr",
+        "ggplot2",
+        "ggstats",
         "grDevices",
-        "graphics",
-        "methods",
-        "stats",
-        "utils"
-      ],
-      "Hash": "a41d0fc833ea756a1136b60a437efe26"
-    },
-    "Matrix": {
-      "Package": "Matrix",
-      "Version": "1.7-3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "grDevices",
-        "graphics",
         "grid",
-        "lattice",
-        "methods",
-        "stats",
+        "gtable",
+        "lifecycle",
+        "magrittr",
+        "progress",
+        "rlang",
+        "scales",
+        "tidyr",
         "utils"
       ],
-      "Hash": "fb578c2b5d796882c60e9f770352f7c4"
+      "Hash": "acf925fc4800661d1a3610657f14a703"
     },
     "QuickJSR": {
       "Package": "QuickJSR",
@@ -773,28 +767,25 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.5.2",
+      "Version": "4.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
-        "MASS",
         "R",
+        "S7",
         "cli",
-        "glue",
         "grDevices",
         "grid",
         "gtable",
         "isoband",
         "lifecycle",
-        "mgcv",
         "rlang",
         "scales",
         "stats",
-        "tibble",
         "vctrs",
         "withr"
       ],
-      "Hash": "7ad64861e028a777d7d67ff83231b548"
+      "Hash": "98520fe6b2745c466dca8e46aaa86242"
     },
     "ggrepel": {
       "Package": "ggrepel",
@@ -811,6 +802,29 @@
         "withr"
       ],
       "Hash": "3d4156850acc1161f2f24bc61c9217c1"
+    },
+    "ggstats": {
+      "Package": "ggstats",
+      "Version": "0.13.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "cli",
+        "dplyr",
+        "forcats",
+        "ggplot2",
+        "lifecycle",
+        "patchwork",
+        "purrr",
+        "rlang",
+        "scales",
+        "stats",
+        "stringr",
+        "tidyr",
+        "utils"
+      ],
+      "Hash": "401d12c926aa4c3cca5e9c909c5e6756"
     },
     "glue": {
       "Package": "glue",
@@ -1184,23 +1198,6 @@
       ],
       "Hash": "e2817ccf4a065c5d9d7f2cfbe7c1d78c"
     },
-    "mgcv": {
-      "Package": "mgcv",
-      "Version": "1.9-1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "Matrix",
-        "R",
-        "graphics",
-        "methods",
-        "nlme",
-        "splines",
-        "stats",
-        "utils"
-      ],
-      "Hash": "110ee9d83b496279960e162ac97764ce"
-    },
     "mime": {
       "Package": "mime",
       "Version": "0.13",
@@ -1274,6 +1271,25 @@
         "askpass"
       ],
       "Hash": "05ce1ed077e8c97fbb3ec1cb078f1159"
+    },
+    "patchwork": {
+      "Package": "patchwork",
+      "Version": "1.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "cli",
+        "farver",
+        "ggplot2",
+        "grDevices",
+        "graphics",
+        "grid",
+        "gtable",
+        "rlang",
+        "stats",
+        "utils"
+      ],
+      "Hash": "97fc0338dd42af55d170478dfc4c0c03"
     },
     "pillar": {
       "Package": "pillar",
